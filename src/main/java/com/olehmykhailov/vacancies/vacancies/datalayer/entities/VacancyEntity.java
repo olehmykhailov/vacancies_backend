@@ -1,0 +1,40 @@
+package com.olehmykhailov.vacancies.vacancies.datalayer.entities;
+
+import com.olehmykhailov.vacancies.common.BaseEntity;
+import com.olehmykhailov.vacancies.vacancies.datalayer.enums.VacancyStatusEnum;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "vacancies")
+@NoArgsConstructor
+@AllArgsConstructor
+public class VacancyEntity extends BaseEntity {
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "company")
+    private String company;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private VacancyStatusEnum status = VacancyStatusEnum.SENT;
+
+    @Column(name = "url")
+    private String url;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "vacancy_technology",
+            joinColumns = @JoinColumn(name = "vacancy_id"),
+            inverseJoinColumns = @JoinColumn(name = "technology_id")
+    )
+    private Set<TechnologyEntity> stack = new HashSet<>();
+}
