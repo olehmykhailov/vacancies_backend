@@ -60,6 +60,17 @@ public class GlobalExceptionsHandler {
         );
     }
 
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPasswordException(InvalidPasswordException ex, HttpServletRequest req) {
+        return buildResponse(
+                "ERR:UNAUTHORIZED",
+                ex.getMessage(),
+                HttpStatus.UNAUTHORIZED,
+                req.getRequestURI(),
+                null
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex, HttpServletRequest req) {
         log.error("Internal Server error at {}", req.getRequestURI(), ex);

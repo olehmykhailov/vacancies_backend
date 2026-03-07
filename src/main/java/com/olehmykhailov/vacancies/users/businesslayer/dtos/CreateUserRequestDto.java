@@ -1,11 +1,13 @@
 package com.olehmykhailov.vacancies.users.businesslayer.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record CreateUserRequestDto(
     @NotBlank(message = "ERR:EMAIL_BLANK")
+    @Email(message = "ERR:INVALID_EMAIL")
     String email,
 
     @NotBlank(message = "ERR:PASSWORD_BLANK")
