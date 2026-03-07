@@ -1,6 +1,7 @@
 package com.olehmykhailov.vacancies.vacancies.datalayer.entities;
 
 import com.olehmykhailov.vacancies.common.BaseEntity;
+import com.olehmykhailov.vacancies.users.datalayer.entities.UserEntity;
 import com.olehmykhailov.vacancies.vacancies.datalayer.enums.VacancyStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,10 @@ public class VacancyEntity extends BaseEntity {
 
     @Column(name = "url")
     private String url;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

@@ -5,6 +5,7 @@ import com.olehmykhailov.vacancies.vacancies.datalayer.entities.VacancyEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class UserEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
