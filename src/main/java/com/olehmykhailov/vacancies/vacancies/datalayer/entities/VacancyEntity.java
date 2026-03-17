@@ -5,7 +5,9 @@ import com.olehmykhailov.vacancies.users.datalayer.entities.UserEntity;
 import com.olehmykhailov.vacancies.vacancies.datalayer.enums.VacancyStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Table(name = "vacancies")
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter @Getter
 public class VacancyEntity extends BaseEntity {
     @Column(name = "title")
     private String title;
@@ -31,7 +34,7 @@ public class VacancyEntity extends BaseEntity {
     @Column(name = "url")
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 

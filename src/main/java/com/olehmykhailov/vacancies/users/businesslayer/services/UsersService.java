@@ -7,13 +7,11 @@ import com.olehmykhailov.vacancies.users.businesslayer.dtos.*;
 import com.olehmykhailov.vacancies.users.businesslayer.mappers.UserMapper;
 import com.olehmykhailov.vacancies.users.datalayer.entities.UserEntity;
 import com.olehmykhailov.vacancies.users.datalayer.repositories.UserEntityRepository;
-import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
@@ -30,8 +28,8 @@ public class UsersService {
     }
 
     @Transactional
-    public UserEntity createUser(String email, String password) {
-        if (userEntityRepository.isUserExistsByEmail(email)) {
+    public void createUser(String email, String password) {
+        if (userEntityRepository.existsByEmail(email)) {
             throw new ConflictException("ERR:EMAIL_EXISTS");
         }
         String passwordHash = passwordEncoder.encode(password);
@@ -39,7 +37,7 @@ public class UsersService {
         user.setEmail(email);
         user.setPassword(passwordHash);
 
-        return userEntityRepository.save(user);
+        userEntityRepository.save(user);
     }
 
     @Transactional
@@ -59,7 +57,7 @@ public class UsersService {
     ) {
         UserEntity user = findEntityById(id);
 
-        if (!passwordEncoder.matches(user.getPassword(), updateUserPasswordRequestDto.oldPassword())) {
+        if (!passwordEncoder.matches(updateUserPasswordRequestDto.oldPassword(), user.getPassword())) {
             throw new InvalidPasswordException("ERR:INVALID_PASSWORD");
         }
 

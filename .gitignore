@@ -16,6 +16,9 @@ target/
 ### Envs ###
 *.env
 
+### Docker Compose ###
+docker-compose.yml
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

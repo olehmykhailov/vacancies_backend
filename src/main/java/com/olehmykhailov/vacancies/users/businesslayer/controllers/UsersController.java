@@ -6,6 +6,7 @@ import com.olehmykhailov.vacancies.users.businesslayer.dtos.UpdateUserResponseDt
 import com.olehmykhailov.vacancies.users.businesslayer.services.UsersService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,25 +18,28 @@ public class UsersController {
     private final UsersService usersService;
 
     @PatchMapping("/{id}/password")
-    public UpdateUserResponseDto updateUserPassword(
+    public ResponseEntity<UpdateUserResponseDto> updateUserPassword(
             @PathVariable(name = "id") UUID id,
             @Valid @RequestBody UpdateUserPasswordRequestDto userPasswordRequestDto
-            ) {
-        return usersService.updatePassword(id, userPasswordRequestDto);
+    ) {
+        UpdateUserResponseDto response = usersService.updatePassword(id, userPasswordRequestDto);
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}/email")
-    public UpdateUserResponseDto updateUserEmail(
+    public ResponseEntity<UpdateUserResponseDto> updateUserEmail(
             @PathVariable(name = "id") UUID id,
             @Valid @RequestBody UpdateUserEmailRequestDto updateUserEmailRequestDto
-            ) {
-        return usersService.updateEmail(id, updateUserEmailRequestDto);
+    ) {
+        UpdateUserResponseDto response = usersService.updateEmail(id, updateUserEmailRequestDto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(
+    public ResponseEntity<Void> deleteUser(
             @PathVariable(name = "id") UUID id
     ) {
         usersService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
