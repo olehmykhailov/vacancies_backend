@@ -21,4 +21,14 @@ public interface VacanciesMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
     void updateEntityFromDto(PatchVacancyRequestDto dto, @MappingTarget VacancyEntity entity);
+
+    default String map(com.olehmykhailov.vacancies.vacancies.datalayer.entities.TechnologyEntity entity) {
+        return entity.getName();
+    }
+
+    default com.olehmykhailov.vacancies.vacancies.datalayer.entities.TechnologyEntity map(String name) {
+        com.olehmykhailov.vacancies.vacancies.datalayer.entities.TechnologyEntity entity = new com.olehmykhailov.vacancies.vacancies.datalayer.entities.TechnologyEntity();
+        entity.setName(name);
+        return entity;
+    }
 }
